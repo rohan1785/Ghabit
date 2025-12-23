@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List - GHabit</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="todolist-styles.css">
+</head>
+<body>
+  <!-- Main Header Navigation -->
+  <div class="header">
+    <div class="header-left">
+      <button class="instagram-link" onclick="openInstagramModal()" aria-label="Follow on Instagram">
+        <svg class="instagram-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="header-right">
+      <nav class="primary-nav" id="primaryNav">
+        <a class="btn-ghost active" href="todolist.html">Todo List</a>
+        <a class="btn-ghost" href="todo.html">Day Planner</a>
+        <a class="btn-ghost" href="habit.html">Habit Tracker</a>
+        <a class="btn-ghost" href="matrix.html">Matrix View</a>
+        <a class="btn-ghost" href="calendar.html">Calendar View</a>
+        <a class="btn-ghost" href="motivation.html">Motivation</a>
+        <a class="btn-ghost" href="goal-countdown.html">Goal Countdown</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search tasks...">
+          <button class="btn-ghost">🔍</button>
+        </div>
+        <button class="btn-ghost" onclick="clearAll()">🗑️ Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-grid">
+    <section class="todo-panel panel">
+      <div class="todo-header-nav">
+        <h2 class="section-title">To-do list</h2>
+        <div class="date-navigation">
+          <button id="datePrevBtn" class="btn-ghost">← Previous</button>
+          <button id="dateTodayBtn" class="btn-ghost">Today</button>
+          <button id="dateNextBtn" class="btn-ghost">Next →</button>
+          <span id="currentDateDisplay"></span>
+        </div>
+      </div>
+      <div id="pendingMessage" class="pending-message" role="status" aria-live="polite" hidden></div>
+
+      <div class="progress-section">
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <span class="progress-label" id="progressLabel" aria-live="polite">0%</span>
+      </div>
+
+      <div class="counts" aria-live="polite">
+        <span class="count-item">Total: <strong id="countTotal">0</strong></span>
+        <span class="count-separator">•</span>
+        <span class="count-item">Active: <strong id="countActive">0</strong></span>
+        <span class="count-separator">•</span>
+        <span class="count-item">Done: <strong id="countDone">0</strong></span>
+        <span class="count-separator">•</span>
+        <span class="count-item">Cancelled: <strong id="countCancelled">0</strong></span>
+      </div>
+
+      <div class="total-estimated-time-box" id="totalEstimatedTimeBox" aria-live="polite">
+        <div class="time-display-item">
+          <span class="time-icon">⏱</span>
+          <span class="time-label">Total Estimated:</span>
+          <span class="time-value" id="totalEstimatedTime">0h 0m</span>
+        </div>
+        <div class="time-display-item">
+          <span class="time-label">Available:</span>
+          <input type="number" id="totalAvailableHours" min="0" max="24" step="0.5" value="0" placeholder="Hours" class="available-hours-input" aria-label="Total available hours for the day">
+          <span class="time-label">h</span>
+        </div>
+        <div class="time-display-item remaining-time">
+          <span class="time-label">Remaining:</span>
+          <span class="time-value" id="remainingTime">0h 0m</span>
+        </div>
+      </div>
+
+      <div class="filters">
+        <button class="chip filter-chip active" data-filter="all">All</button>
+        <button class="chip filter-chip" data-filter="active">Active</button>
+        <button class="chip filter-chip" data-filter="done">Done</button>
+        <button class="chip filter-chip" data-filter="cancelled">Cancelled</button>
+      </div>
+
+      <div class="add-task">
+        <input type="text" id="taskTitle" placeholder="Task title (required)" required aria-label="Task title">
+        <input type="text" id="taskNote" placeholder="Add a note (optional)" aria-label="Task note">
+        <div class="task-time-estimate">
+          <label for="taskHours">Estimated Time</label>
+          <div class="time-inputs">
+            <input type="number" id="taskHours" min="0" max="23" value="0" placeholder="H" aria-label="Hours">
+            <span class="time-separator">:</span>
+            <input type="number" id="taskMinutes" min="0" max="59" value="0" placeholder="M" aria-label="Minutes">
+          </div>
+        </div>
+        <button id="addTaskBtn" class="btn-primary">Add Task</button>
+      </div>
+
+      <div class="task-list" id="taskList"></div>
+    </section>
+
+    <section class="pomo-panel panel">
+      <div class="hero-bg" id="heroBg">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <h2 class="pomo-heading" contenteditable="false" id="pomoHeading" aria-label="Focus goal">What do you want to focus on?</h2>
+
+          <div class="mode-pills">
+            <button class="pill mode-pill active" data-mode="work">Focus</button>
+            <button class="pill mode-pill" data-mode="short">Short Break</button>
+            <button class="pill mode-pill" data-mode="long">Long Break</button>
+            <button class="pill mode-pill" data-mode="deepwork">Deep Work</button>
+          </div>
+
+          <div class="timer-display" id="timerDisplay">25:00</div>
+
+          <div class="controls">
+            <button id="startPauseBtn" class="btn-primary btn-large">Start</button>
+            <button id="resetBtn" class="btn-ghost">Reset</button>
+            <button id="attachTaskBtn" class="btn-ghost" disabled>Attach Selected Task</button>
+          </div>
+
+          <div class="pomo-info">
+            <p class="attached-task" id="attachedTask">No task attached</p>
+            <p class="rounds-counter">Rounds: <strong id="roundsCount">0</strong></p>
+          </div>
+
+          <details class="settings">
+            <summary>Settings</summary>
+            <div class="settings-content">
+              <label>
+                Work (min)
+                <input id="durWork" type="number" min="5" max="90" value="25">
+              </label>
+              <label>
+                Short break (min)
+                <input id="durShort" type="number" min="3" max="30" value="5">
+              </label>
+              <label>
+                Long break (min)
+                <input id="durLong" type="number" min="5" max="60" value="15">
+              </label>
+              <label>
+                Rounds until long break
+                <input id="roundsLong" type="number" min="1" max="12" value="4">
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="autoNext">
+                Auto-next session
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="soundOn" checked>
+                Sound on completion
+              </label>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shortcuts">
+      <span><kbd>Space</kbd> Start/Pause</span>
+      <span><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> Switch modes</span>
+      <span><kbd>R</kbd> Reset</span>
+      <span><kbd>Enter</kbd> Add task</span>
+    </div>
+  </footer>
+
+  <div id="confirmModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalMessage">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-icon">⚠️</div>
+      <h3 id="modalTitle" class="modal-title">Clear All Tasks?</h3>
+      <p id="modalMessage" class="modal-message">This will permanently delete all your tasks. This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button id="modalCancel" class="btn-modal btn-cancel">Cancel</button>
+        <button id="modalConfirm" class="btn-modal btn-danger">Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="todolist.js"></script>
+  <script src="instagram-modal.js"></script>
+
+  <!-- Instagram Profile Modal -->
+  <div id="instagramModal" class="instagram-modal" aria-hidden="true">
+    <div class="instagram-modal-overlay" onclick="closeInstagramModal()"></div>
+    <div class="instagram-modal-content">
+      <button class="instagram-modal-close" onclick="closeInstagramModal()">×</button>
+      <div class="instagram-profile">
+        <div class="instagram-profile-header">
+          <div class="instagram-avatar">RP</div>
+          <div class="instagram-info">
+            <h3>@rohanpatil.09_</h3>
+            <p>Follow me on Instagram</p>
+          </div>
+        </div>
+        <div class="instagram-stats">
+          <div class="stat">
+            <span class="stat-number">Posts</span>
+            <span class="stat-label">Latest</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">Stories</span>
+            <span class="stat-label">Daily</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">Reels</span>
+            <span class="stat-label">Creative</span>
+          </div>
+        </div>
+      </div>
+      <div class="instagram-modal-footer">
+        <a href="https://www.instagram.com/rohanpatil.09_?igsh=MWw3eTJ4b3h1YmMzYQ==" class="instagram-open-btn">Open in Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <span class="footer-name">@rohanpatil.09_</span>
+    </div>
+  </footer>
+</body>
+</html>

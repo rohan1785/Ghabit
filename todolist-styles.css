@@ -1,0 +1,173 @@
+/* Todo List Specific Styles */
+.todo-panel {
+    background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.todo-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.todo-header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.date-navigation {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.date-navigation button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+#currentDateDisplay {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-left: 1rem;
+    font-size: 0.9rem;
+}
+
+.pending-message {
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    color: #ffc107;
+}
+
+.pending-message.visible {
+    display: flex;
+}
+
+.pending-message-icon {
+    font-size: 1.2rem;
+}
+
+.pending-message-text {
+    flex: 1;
+}
+
+/* Task item specific styles */
+.task-item {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.task-item.selected {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.2);
+}
+
+.task-move-panel {
+    display: none;
+    grid-column: 1 / -1;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.task-move-panel.open {
+    display: block;
+}
+
+.task-move-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.task-move-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.task-move-date {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.task-move-date label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.task-move-date-input {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.task-move-date-input input[type="date"] {
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.move-chip {
+    padding: 0.4rem 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.move-chip:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .todo-header-nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .date-navigation {
+        justify-content: center;
+    }
+    
+    #currentDateDisplay {
+        margin-left: 0;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+    
+    .task-move-options {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .task-move-date-input {
+        flex-direction: column;
+    }
+}

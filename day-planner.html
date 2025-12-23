@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day Planner</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Day Planner Specific Styles */
+    .habit-tracker-page { min-height: 100vh; padding: 2rem; background: var(--surface); background-image: radial-gradient(circle at 20% 30%, rgba(10,132,255,0.06) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(52,199,89,0.04) 0%, transparent 50%); }
+    .habit-container { max-width: 1600px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem; padding:0 1rem; }
+    .habit-main-card { background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.06); padding: 1.5rem; box-shadow: 0 18px 60px rgba(12, 34, 70, 0.14); overflow: hidden; }
+    
+    .day-planner-container { max-width:1600px; margin:0 auto; display:flex; flex-direction:column; gap:1.75rem; padding:0 1rem; }
+    .day-planner-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .day-planner-title { font-size: 2rem; font-weight: 800; color: var(--text); margin: 0; letter-spacing: -0.01em; }
+    .day-planner-date-nav { display: flex; gap: 0.5rem; align-items: center; }
+    .day-planner-date-btn { padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: var(--text); cursor: pointer; }
+    .day-planner-date-display { padding: 0.5rem 1rem; font-weight: 600; color: var(--text); }
+    
+    .day-planner-blocks { display:grid; grid-template-columns: repeat(3,1fr); gap:1.5rem; align-items:start; }
+    .time-block-card { padding:1rem; background: rgba(255,255,255,0.04); border-radius:var(--radius-lg); border:1px solid rgba(255,255,255,0.06); transition: transform 260ms cubic-bezier(.2,.9,.25,1), box-shadow 260ms; will-change: transform; }
+    .time-block-card:hover { transform: translateY(-8px); box-shadow: 0 18px 40px rgba(10,132,255,0.08); }
+    .time-block-title { font-size: 1.25rem; font-weight: 700; color: var(--text); margin: 0; }
+    .time-block-tasks { min-height:160px; max-height:620px; overflow:auto }
+    .time-block-task { padding:0.75rem; display:flex; gap:0.75rem; align-items:flex-start; border-radius:8px; background:rgba(0,0,0,0.25); margin-bottom: 0.5rem; }
+    .time-block-task .title { font-weight:800; color: var(--text); font-size: 1.15rem; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 0.25rem; display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+    .time-block-task .meta { color:var(--text-secondary); font-size:0.9rem }
+    
+    .time-block-add-btn { padding: 0.5rem 0.9rem; border-radius: 12px; border: none; background: linear-gradient(135deg,var(--primary),#0066d6); color: #fff; cursor: pointer; transition: transform 180ms, box-shadow 180ms; }
+    .time-block-add-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(10,132,255,0.14); }
+    
+    .time-block-add-form { display: none; margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); }
+    .time-block-add-form.active { display: block; }
+    .time-block-form-input { width: 100%; padding: 0.5rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: var(--text); margin-bottom: 0.5rem; }
+    .time-block-form-btn { padding: 0.5rem 1rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; }
+    .time-block-form-btn-primary { background: var(--primary); color: white; }
+    .time-block-form-btn-secondary { background: rgba(255,255,255,0.1); color: var(--text); }
+    
+    .day-planner-summary-bar { margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.04); border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.06); }
+    .day-planner-summary-bar-content { display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+    .day-planner-summary-bar-items { display: flex; gap: 2rem; }
+    .day-planner-summary-bar-items > div { text-align: center; }
+    .day-planner-summary-label { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
+    .day-planner-summary-bar-progress { flex: 1; max-width: 300px; }
+    .day-planner-summary-bar-progress-label { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .day-planner-summary-bar-progress-bar { background: rgba(255,255,255,0.04); border-radius: 999px; height: 12px; overflow:hidden; border: 1px solid rgba(255,255,255,0.04); }
+    .day-planner-summary-bar-progress-fill { height:100%; width:0%; background: linear-gradient(90deg,#0a84ff,#34c759); box-shadow: 0 6px 20px rgba(10,132,255,0.12); transition: width 600ms cubic-bezier(.2,.9,.25,1); }
+    
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px) scale(.995); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .animate-in { animation: fadeUp 520ms cubic-bezier(.2,.9,.25,1) both; }
+    
+    @media (max-width: 980px) { .day-planner-blocks { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 640px) { .day-planner-blocks { grid-template-columns: 1fr; } .habit-container, .day-planner-container { padding:0 0.75rem; } .habit-main-card { padding:1rem; } .day-planner-title { font-size:1.4rem; } }
+  </style>
+</head>
+
+<body>
+  <div class="habit-tracker-page">
+    <div class="habit-container">
+      <div class="habit-main-card animate-in">
+        <div class="header">
+          <div class="header-left">
+            <h1 class="page-title">Day Planner</h1>
+          </div>
+          <div class="header-right">
+            <nav class="primary-nav" id="primaryNav" data-nav-menu>
+              <a class='btn-ghost' href='todo.html' style='text-decoration: none; color: inherit;'>List View</a>
+              <a class='btn-ghost' href='day-planner.html' style='text-decoration: none; color: inherit;'>Day Planner</a>
+              <a class='btn-ghost' href='habit.html' style='text-decoration: none; color: inherit;'>Habit Tracker</a>
+              <a class='btn-ghost' href='matrix.html' style='text-decoration: none; color: inherit;'>Matrix View</a>
+              <a class='btn-ghost' href='calendar.html' style='text-decoration: none; color: inherit;'>Calendar View</a>
+              <a class='btn-ghost' href='motivation.html' style='text-decoration: none; color: inherit;'>Motivation 🕙</a>
+              <a class='btn-ghost' href='goal-countdown.html' style='text-decoration: none; color: inherit;'>Goal Countdown</a>
+              <a class='btn-ghost' href='analytics.html' style='text-decoration: none; color: inherit;'>Analytics 📊</a>
+            </nav>
+            <div class="header-actions">
+              <button class="btn-ghost" onclick="SearchManager.open()" title="Search (Ctrl+K)">🔍 Search</button>
+              <div class="data-controls">
+                <button class="btn-data export" onclick="DataManager.exportData()" title="Export Data">📤 Export</button>
+                <button class="btn-data import" onclick="document.getElementById('importFile').click()" title="Import Data">📥 Import</button>
+                <input type="file" id="importFile" class="file-input" accept=".json" onchange="handleImport(event)">
+              </div>
+              <button class="theme-toggle" id="themeToggle" onclick="ThemeManager.toggleTheme()" title="Toggle Theme">💻</button>
+              <button class="notification-permission" id="notificationBtn" onclick="requestNotifications()" title="Enable Notifications">🔔</button>
+              <a class="btn-ghost" href="https://www.instagram.com/rohanpatil.09_?igsh=MWw3eTJ4b3h1YmMzYQ==" target="_blank" rel="noopener" aria-label="Open Instagram profile">
+                <span class="icon icon-instagram" aria-hidden="true">
+                  <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                    <rect x="48" y="48" width="416" height="416" rx="96" ry="96" fill="none" stroke="currentColor" stroke-width="32"/>
+                    <circle cx="256" cy="256" r="80" fill="currentColor"/>
+                    <circle cx="384" cy="128" r="24" fill="currentColor"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-planner-container">
+          <div class="day-planner-header">
+            <div>
+              <h2 class="day-planner-title">Today</h2>
+            </div>
+            <div class="day-planner-date-nav">
+              <button class="day-planner-date-btn" onclick="changeDate(-1)">← Previous</button>
+              <div class="day-planner-date-display" id="currentDateDisplay">Today</div>
+              <button class="day-planner-date-btn" onclick="goToToday()">Today</button>
+              <button class="day-planner-date-btn" onclick="changeDate(1)">Next →</button>
+            </div>
+          </div>
+
+          <div class="day-planner-blocks">
+            <div class="time-block-card" data-block="morning">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
+                <div>
+                  <h3 class="time-block-title">Morning</h3>
+                  <div class="time-block-time meta">6:00 AM - 12:00 PM</div>
+                </div>
+                <div>
+                  <button class="time-block-add-btn" onclick="toggleAddForm('morning')">+ Add</button>
+                </div>
+              </div>
+              <div class="time-block-tasks" id="morningTasks"></div>
+              <form id="morningForm" class="time-block-add-form">
+                <input class="time-block-form-input" data-field="title" placeholder="Task title">
+                <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+                  <input class="time-block-form-input" data-field="hours" type="number" min="0" placeholder="H">
+                  <input class="time-block-form-input" data-field="minutes" type="number" min="0" placeholder="M">
+                </div>
+                <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+                  <button type="button" class="time-block-form-btn time-block-form-btn-primary" onclick="addTaskToBlock('morning')">Add</button>
+                  <button type="button" class="time-block-form-btn time-block-form-btn-secondary" onclick="cancelAddForm('morning')">Cancel</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="time-block-card" data-block="afternoon">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
+                <div>
+                  <h3 class="time-block-title">Afternoon</h3>
+                  <div class="time-block-time meta">12:00 PM - 5:00 PM</div>
+                </div>
+                <div>
+                  <button class="time-block-add-btn" onclick="toggleAddForm('afternoon')">+ Add</button>
+                </div>
+              </div>
+              <div class="time-block-tasks" id="afternoonTasks"></div>
+              <form id="afternoonForm" class="time-block-add-form">
+                <input class="time-block-form-input" data-field="title" placeholder="Task title">
+                <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+                  <input class="time-block-form-input" data-field="hours" type="number" min="0" placeholder="H">
+                  <input class="time-block-form-input" data-field="minutes" type="number" min="0" placeholder="M">
+                </div>
+                <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+                  <button type="button" class="time-block-form-btn time-block-form-btn-primary" onclick="addTaskToBlock('afternoon')">Add</button>
+                  <button type="button" class="time-block-form-btn time-block-form-btn-secondary" onclick="cancelAddForm('afternoon')">Cancel</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="time-block-card" data-block="evening">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
+                <div>
+                  <h3 class="time-block-title">Evening</h3>
+                  <div class="time-block-time meta">5:00 PM - 9:00 PM</div>
+                </div>
+                <div>
+                  <button class="time-block-add-btn" onclick="toggleAddForm('evening')">+ Add</button>
+                </div>
+              </div>
+              <div class="time-block-tasks" id="eveningTasks"></div>
+              <form id="eveningForm" class="time-block-add-form">
+                <input class="time-block-form-input" data-field="title" placeholder="Task title">
+                <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+                  <input class="time-block-form-input" data-field="hours" type="number" min="0" placeholder="H">
+                  <input class="time-block-form-input" data-field="minutes" type="number" min="0" placeholder="M">
+                </div>
+                <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+                  <button type="button" class="time-block-form-btn time-block-form-btn-primary" onclick="addTaskToBlock('evening')">Add</button>
+                  <button type="button" class="time-block-form-btn time-block-form-btn-secondary" onclick="cancelAddForm('evening')">Cancel</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="time-block-card" data-block="night">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
+                <div>
+                  <h3 class="time-block-title">Night</h3>
+                  <div class="time-block-time meta">9:00 PM - 12:00 AM</div>
+                </div>
+                <div>
+                  <button class="time-block-add-btn" onclick="toggleAddForm('night')">+ Add</button>
+                </div>
+              </div>
+              <div class="time-block-tasks" id="nightTasks"></div>
+              <form id="nightForm" class="time-block-add-form">
+                <input class="time-block-form-input" data-field="title" placeholder="Task title">
+                <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+                  <input class="time-block-form-input" data-field="hours" type="number" min="0" placeholder="H">
+                  <input class="time-block-form-input" data-field="minutes" type="number" min="0" placeholder="M">
+                </div>
+                <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+                  <button type="button" class="time-block-form-btn time-block-form-btn-primary" onclick="addTaskToBlock('night')">Add</button>
+                  <button type="button" class="time-block-form-btn time-block-form-btn-secondary" onclick="cancelAddForm('night')">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="day-planner-summary-bar">
+            <div class="day-planner-summary-bar-content">
+              <div class="day-planner-summary-bar-items">
+                <div>
+                  <div class="day-planner-summary-label">Total</div>
+                  <div id="dailyTotalTasks">0</div>
+                </div>
+                <div>
+                  <div class="day-planner-summary-label">Completed</div>
+                  <div id="dailyCompletedTasks">0</div>
+                </div>
+              </div>
+              <div class="day-planner-summary-bar-progress">
+                <div class="day-planner-summary-bar-progress-label">
+                  <span>Progress</span>
+                  <span id="dailyProgressPercent">0%</span>
+                </div>
+                <div class="day-planner-summary-bar-progress-bar">
+                  <div id="dailyProgressFill" class="day-planner-summary-bar-progress-fill" style="width:0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="utils.js"></script>
+  <script src="search.js"></script>
+  <script src="pomodoro.js"></script>
+  <script src="quickadd.js"></script>
+  <script>
+    function handleImport(event) {
+      const file = event.target.files[0];
+      if (file) {
+        DataManager.importData(file);
+        event.target.value = '';
+      }
+    }
+    window.handleImport = handleImport;
+
+    async function requestNotifications() {
+      const granted = await NotificationManager.requestPermission();
+      const btn = document.getElementById('notificationBtn');
+      if (granted) {
+        btn.style.opacity = '0.5';
+        btn.title = 'Notifications enabled';
+        NotificationManager.show('Notifications Enabled', {
+          body: 'You will now receive task reminders!'
+        });
+      } else {
+        alert('Please enable notifications in your browser settings');
+      }
+    }
+    window.requestNotifications = requestNotifications;
+
+    // Day Planner functionality
+    const STORAGE_KEY = 'focus_tasks_v1';
+    let tasks = [];
+    let currentViewDate = new Date();
+
+    function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+
+    function loadTasks() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        tasks = raw ? JSON.parse(raw) : [];
+      } catch (e) { tasks = []; }
+    }
+
+    function saveTasks() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks)); } catch (e) {}
+    }
+
+    function formatDateKey(d) {
+      const y = d.getFullYear(); 
+      const m = String(d.getMonth()+1).padStart(2,'0'); 
+      const day = String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function getTasksForDate(date) {
+      const key = formatDateKey(date);
+      return tasks.filter(t => t.dateKey === key);
+    }
+
+    function renderBlock(block) {
+      const container = document.getElementById(block + 'Tasks');
+      container.innerHTML = '';
+      const dateTasks = getTasksForDate(currentViewDate).filter(t => (t.timeBlock||'') === block);
+      
+      if (dateTasks.length === 0) {
+        container.innerHTML = '<div style="padding:1rem;color:var(--text-secondary)">No tasks</div>';
+        return;
+      }
+
+      dateTasks.forEach(task => {
+        const el = document.createElement('div');
+        el.className = 'time-block-task';
+        el.innerHTML = `
+          <div style="flex:1">
+            <div class="title">${escapeHtml(task.title)}</div>
+            <div class="meta">${task.estimatedMinutes ? Math.floor(task.estimatedMinutes/60)+'h '+(task.estimatedMinutes%60)+'m' : ''} • ${task.note || ''}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0.25rem">
+            <button class="btn-ghost" onclick="toggleTaskStatus('${task.id}')">${task.status==='done'?'Undo':'Done'}</button>
+            <button class="btn-ghost" onclick="openMoveBlockModal('${task.id}')">Move</button>
+          </div>
+        `;
+        container.appendChild(el);
+      });
+    }
+
+    function renderAllBlocks() {
+      renderBlock('morning'); 
+      renderBlock('afternoon'); 
+      renderBlock('evening'); 
+      renderBlock('night');
+      updateDailySummary(); 
+      updateDateDisplay();
+    }
+
+    function toggleTaskStatus(id) {
+      const t = tasks.find(x=>x.id===id); 
+      if(!t) return; 
+      t.status = (t.status==='done') ? 'active' : 'done'; 
+      saveTasks(); 
+      renderAllBlocks();
+    }
+
+    function updateDailySummary(){
+      const dateTasks = getTasksForDate(currentViewDate);
+      const total = dateTasks.length; 
+      const done = dateTasks.filter(t=>t.status==='done').length;
+      const percent = total>0?Math.round(done/total*100):0;
+      
+      document.getElementById('dailyTotalTasks').textContent = total;
+      document.getElementById('dailyCompletedTasks').textContent = done;
+      document.getElementById('dailyProgressPercent').textContent = percent + '%';
+      document.getElementById('dailyProgressFill').style.width = percent + '%';
+    }
+
+    function changeDate(delta){ 
+      currentViewDate.setDate(currentViewDate.getDate()+delta); 
+      currentViewDate.setHours(0,0,0,0); 
+      renderAllBlocks(); 
+    }
+    
+    function goToToday(){ 
+      currentViewDate = new Date(); 
+      currentViewDate.setHours(0,0,0,0); 
+      renderAllBlocks(); 
+    }
+    
+    function updateDateDisplay(){ 
+      document.getElementById('currentDateDisplay').textContent = currentViewDate.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'}); 
+    }
+
+    function toggleAddForm(block){ 
+      const f = document.getElementById(block+'Form'); 
+      if(!f) return; 
+      f.classList.toggle('active'); 
+    }
+    
+    function cancelAddForm(block){ 
+      const f = document.getElementById(block+'Form'); 
+      if(!f) return; 
+      f.classList.remove('active'); 
+    }
+
+    function addTaskToBlock(block){
+      const form = document.getElementById(block+'Form');
+      const title = (form.querySelector('[data-field="title"]').value||'').trim();
+      if(!title) { alert('Enter a title'); return; }
+      
+      const hours = parseInt(form.querySelector('[data-field="hours"]').value||0)||0;
+      const minutes = parseInt(form.querySelector('[data-field="minutes"]').value||0)||0;
+      const estimated = hours*60 + minutes;
+      
+      const task = { 
+        id: uid(), 
+        title, 
+        note:'', 
+        hours, 
+        minutes, 
+        estimatedMinutes: estimated, 
+        status:'active', 
+        dateKey: formatDateKey(currentViewDate), 
+        timeBlock: block, 
+        createdAt: new Date().toISOString() 
+      };
+      
+      tasks.unshift(task); 
+      saveTasks(); 
+      form.reset(); 
+      cancelAddForm(block); 
+      renderAllBlocks();
+    }
+
+    function openMoveBlockModal(taskId){ 
+      const blocks=['morning','afternoon','evening','night']; 
+      const pick = prompt('Move to block (1)Morning (2)Afternoon (3)Evening (4)Night'); 
+      const idx = parseInt(pick)-1; 
+      if(isNaN(idx)||idx<0||idx>3) return; 
+      
+      const t = tasks.find(x=>x.id===taskId); 
+      if(!t) return; 
+      t.timeBlock = blocks[idx]; 
+      saveTasks(); 
+      renderAllBlocks(); 
+    }
+
+    function escapeHtml(s){ 
+      return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c])); 
+    }
+
+    document.addEventListener('DOMContentLoaded', ()=>{ 
+      loadTasks(); 
+      renderAllBlocks(); 
+    });
+  </script>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer-inner">
+      <div class="footer-name">@rohanpatil.09_</div>
+    </div>
+  </footer>
+</body>
+</html>

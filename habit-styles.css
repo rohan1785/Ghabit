@@ -1,0 +1,412 @@
+/* Simple Habit Tracker Styles */
+.habit-tracker-page {
+    min-height: 100vh;
+    background: var(--surface);
+    padding: 2rem 0;
+}
+
+.habit-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.habit-main-card {
+    background: var(--surface-elevated);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+}
+
+.habit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.habit-month-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.habit-nav-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+}
+
+.habit-nav-btn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.habit-month-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+    min-width: 200px;
+    text-align: center;
+}
+
+.habit-filters {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.habit-search,
+.habit-filter-category,
+.habit-sort {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+.habit-search {
+    min-width: 200px;
+}
+
+.habit-summary {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--surface);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.habit-summary-item {
+    text-align: center;
+}
+
+.habit-summary-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.habit-summary-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.habit-progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.habit-progress-bar {
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.habit-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.habit-progress-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.habit-add-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto auto;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: end;
+}
+
+.habit-add-input {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.habit-add-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.habit-category,
+.habit-reminder {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+.habit-add-btn {
+    padding: 0.75rem 1.5rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.habit-add-btn:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+}
+
+.habit-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.habit-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface-elevated);
+}
+
+.habit-table th {
+    background: var(--surface);
+    padding: 1rem 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text);
+    border-bottom: 2px solid var(--border);
+    font-size: 0.9rem;
+}
+
+.habit-name-header {
+    text-align: left !important;
+    min-width: 200px;
+    padding-left: 1rem !important;
+}
+
+.day-header {
+    min-width: 40px;
+    font-size: 0.8rem;
+}
+
+.day-header.today {
+    background: var(--primary);
+    color: white;
+}
+
+.streak-header,
+.actions-header {
+    min-width: 80px;
+}
+
+.habit-table td {
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.habit-name-cell {
+    text-align: left !important;
+    padding-left: 1rem !important;
+}
+
+.habit-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.habit-name {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.habit-category {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.habit-reminder {
+    font-size: 0.75rem;
+    color: var(--primary);
+}
+
+.day-cell {
+    position: relative;
+}
+
+.day-cell.today {
+    background: rgba(10, 132, 255, 0.1);
+}
+
+.day-cell.future {
+    opacity: 0.5;
+}
+
+.habit-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    appearance: none;
+    background: var(--surface);
+    position: relative;
+}
+
+.habit-checkbox:hover {
+    border-color: var(--primary);
+    transform: scale(1.1);
+}
+
+.habit-checkbox:checked {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.habit-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.habit-checkbox:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.streak-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.streak-number {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.streak-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.delete-habit-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.delete-habit-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .habit-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .habit-filters {
+        justify-content: center;
+    }
+    
+    .habit-summary {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .habit-add-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .habit-container {
+        padding: 0 1rem;
+    }
+    
+    .habit-main-card {
+        padding: 1rem;
+    }
+    
+    .habit-month-nav {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .habit-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .habit-search,
+    .habit-filter-category,
+    .habit-sort {
+        width: 100%;
+    }
+    
+    .habit-table-wrapper {
+        font-size: 0.8rem;
+    }
+    
+    .habit-checkbox {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .day-header {
+        min-width: 30px;
+        padding: 0.5rem 0.25rem;
+    }
+    
+    .habit-table td {
+        padding: 0.5rem 0.25rem;
+    }
+}

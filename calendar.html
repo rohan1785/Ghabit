@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar View - GHabit</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="calendar-styles.css">
+</head>
+<body>
+  <!-- Main Header Navigation -->
+  <div class="header">
+    <div class="header-left">
+      <button class="instagram-link" onclick="openInstagramModal()" aria-label="Follow on Instagram">
+        <svg class="instagram-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="header-right">
+      <nav class="primary-nav" id="primaryNav">
+        <a class="btn-ghost" href="todolist.html">Todo List</a>
+        <a class="btn-ghost" href="todo.html">Day Planner</a>
+        <a class="btn-ghost" href="habit.html">Habit Tracker</a>
+        <a class="btn-ghost" href="matrix.html">Matrix View</a>
+        <a class="btn-ghost active" href="calendar.html">Calendar View</a>
+        <a class="btn-ghost" href="motivation.html">Motivation</a>
+        <a class="btn-ghost" href="goal-countdown.html">Goal Countdown</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search events...">
+          <button class="btn-ghost">🔍</button>
+        </div>
+        <button class="btn-ghost" onclick="clearAll()">🗑️ Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="calendar-container">
+    <!-- Calendar Header -->
+    <div class="calendar-header">
+      <div class="calendar-title-section">
+        <h1 class="calendar-title">Calendar View</h1>
+        <p class="calendar-subtitle">Plan your schedule and track your progress</p>
+      </div>
+      <div class="calendar-nav">
+        <button class="calendar-nav-btn" id="prevMonth">← Previous</button>
+        <button class="calendar-nav-btn" id="todayBtn">Today</button>
+        <button class="calendar-nav-btn" id="nextMonth">Next →</button>
+        <div class="calendar-month-display" id="currentMonthDisplay"></div>
+      </div>
+    </div>
+
+    <!-- Calendar Grid -->
+    <div class="calendar-wrapper">
+      <div class="calendar-weekdays">
+        <div class="calendar-weekday">Sun</div>
+        <div class="calendar-weekday">Mon</div>
+        <div class="calendar-weekday">Tue</div>
+        <div class="calendar-weekday">Wed</div>
+        <div class="calendar-weekday">Thu</div>
+        <div class="calendar-weekday">Fri</div>
+        <div class="calendar-weekday">Sat</div>
+      </div>
+      <div class="calendar-grid" id="calendarGrid">
+        <!-- Calendar days will be generated here -->
+      </div>
+    </div>
+
+    <!-- Calendar Legend -->
+    <div class="calendar-legend">
+      <div class="legend-item">
+        <div class="legend-dot today"></div>
+        <span>Today</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot has-tasks"></div>
+        <span>Has Tasks</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot has-habits"></div>
+        <span>Has Habits</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot completed"></div>
+        <span>All Complete</span>
+      </div>
+    </div>
+
+    <!-- Day Details Modal -->
+    <div class="day-modal" id="dayModal">
+      <div class="day-modal-overlay" onclick="closeDayModal()"></div>
+      <div class="day-modal-content">
+        <div class="day-modal-header">
+          <h3 class="day-modal-title" id="dayModalTitle">Day Details</h3>
+          <button class="day-modal-close" onclick="closeDayModal()">×</button>
+        </div>
+        <div class="day-modal-body">
+          <div class="day-modal-section">
+            <h4>Add Task</h4>
+            <div class="add-task-form">
+              <input type="text" id="newTaskTitle" placeholder="Task title" class="task-input">
+              <input type="text" id="newTaskNote" placeholder="Task note (optional)" class="task-input">
+              <button class="btn-primary" onclick="addTaskToDay()">Add Task</button>
+            </div>
+          </div>
+          <div class="day-modal-section">
+            <h4>Tasks</h4>
+            <div class="day-modal-tasks" id="dayModalTasks">
+              <p class="empty-state">No tasks for this day</p>
+            </div>
+          </div>
+          <div class="day-modal-section">
+            <h4>Habits</h4>
+            <div class="day-modal-habits" id="dayModalHabits">
+              <p class="empty-state">No habits for this day</p>
+            </div>
+          </div>
+        </div>
+        <div class="day-modal-actions">
+          <button class="btn-ghost" onclick="closeDayModal()">Close</button>
+          <button class="btn-primary" onclick="goToDay()">Go to Day</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="calendar.js"></script>
+  <script src="instagram-modal.js"></script>
+
+  <!-- Instagram Profile Modal -->
+  <div id="instagramModal" class="instagram-modal" aria-hidden="true">
+    <div class="instagram-modal-overlay" onclick="closeInstagramModal()"></div>
+    <div class="instagram-modal-content">
+      <button class="instagram-modal-close" onclick="closeInstagramModal()">×</button>
+      <div class="instagram-profile">
+        <div class="instagram-profile-header">
+          <div class="instagram-avatar">RP</div>
+          <div class="instagram-info">
+            <h3>@rohanpatil.09_</h3>
+            <p>Follow me on Instagram</p>
+          </div>
+        </div>
+      </div>
+      <div class="instagram-modal-footer">
+        <a href="https://www.instagram.com/rohanpatil.09_" class="instagram-open-btn">Open in Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <span class="footer-name">@rohanpatil.09_</span>
+    </div>
+  </footer>
+</body>
+</html>

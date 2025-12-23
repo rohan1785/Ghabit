@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix View - GHabit</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="matrix-styles.css">
+</head>
+<body>
+  <!-- Main Header Navigation -->
+  <div class="header">
+    <div class="header-left">
+      <button class="instagram-link" onclick="openInstagramModal()" aria-label="Follow on Instagram">
+        <svg class="instagram-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="header-right">
+      <nav class="primary-nav" id="primaryNav">
+        <a class="btn-ghost" href="todolist.html">Todo List</a>
+        <a class="btn-ghost" href="todo.html">Day Planner</a>
+        <a class="btn-ghost" href="habit.html">Habit Tracker</a>
+        <a class="btn-ghost active" href="matrix.html">Matrix View</a>
+        <a class="btn-ghost" href="calendar.html">Calendar View</a>
+        <a class="btn-ghost" href="motivation.html">Motivation</a>
+        <a class="btn-ghost" href="goal-countdown.html">Goal Countdown</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search tasks...">
+          <button class="btn-ghost">🔍</button>
+        </div>
+        <button class="btn-ghost" onclick="clearAll()">🗑️ Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="matrix-container">
+    <!-- Hero Section -->
+    <div class="matrix-hero">
+      <div>
+        <div class="matrix-kicker">Eisenhower Matrix</div>
+        <h1 class="matrix-title">Priority Management</h1>
+        <p class="matrix-subtitle">Organize your tasks by urgency and importance to focus on what truly matters.</p>
+      </div>
+      <div class="matrix-legend">
+        <div class="matrix-legend-item">
+          <div class="matrix-dot IU"></div>
+          <span>Important & Urgent</span>
+        </div>
+        <div class="matrix-legend-item">
+          <div class="matrix-dot IBNU"></div>
+          <span>Important but Not Urgent</span>
+        </div>
+        <div class="matrix-legend-item">
+          <div class="matrix-dot NIBU"></div>
+          <span>Not Important but Urgent</span>
+        </div>
+        <div class="matrix-legend-item">
+          <div class="matrix-dot NINU"></div>
+          <span>Not Important & Not Urgent</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Date Navigation -->
+    <div class="matrix-date-toolbar">
+      <div class="matrix-date-nav">
+        <button class="matrix-nav-btn" id="prevDay">← Previous</button>
+        <button class="matrix-nav-btn" id="todayBtn">Today</button>
+        <button class="matrix-nav-btn" id="nextDay">Next →</button>
+      </div>
+      <div class="matrix-date-display" id="currentDateDisplay"></div>
+    </div>
+
+    <!-- Matrix Grid -->
+    <div class="matrix-grid">
+      <!-- Important & Urgent -->
+      <div class="matrix-quadrant" data-quadrant="IU">
+        <div class="matrix-quadrant-header">
+          <div>
+            <h3>Important & Urgent</h3>
+            <p>Do First - Crisis, emergencies, deadline-driven projects</p>
+          </div>
+          <div class="matrix-count" id="countIU">0</div>
+        </div>
+        <div class="matrix-list" id="listIU">
+          <div class="matrix-empty">No urgent and important tasks</div>
+        </div>
+        <div class="matrix-add">
+          <input type="text" class="matrix-input" placeholder="Task title..." data-quadrant="IU" data-field="title">
+          <textarea class="matrix-textarea" placeholder="Add a note..." data-quadrant="IU" data-field="note"></textarea>
+          <button class="matrix-add-btn" onclick="addTaskToMatrix('IU')">Add Task</button>
+        </div>
+      </div>
+
+      <!-- Important but Not Urgent -->
+      <div class="matrix-quadrant" data-quadrant="IBNU">
+        <div class="matrix-quadrant-header">
+          <div>
+            <h3>Important but Not Urgent</h3>
+            <p>Schedule - Strategic planning, personal development, prevention</p>
+          </div>
+          <div class="matrix-count" id="countIBNU">0</div>
+        </div>
+        <div class="matrix-list" id="listIBNU">
+          <div class="matrix-empty">No important but non-urgent tasks</div>
+        </div>
+        <div class="matrix-add">
+          <input type="text" class="matrix-input" placeholder="Task title..." data-quadrant="IBNU" data-field="title">
+          <textarea class="matrix-textarea" placeholder="Add a note..." data-quadrant="IBNU" data-field="note"></textarea>
+          <button class="matrix-add-btn" onclick="addTaskToMatrix('IBNU')">Add Task</button>
+        </div>
+      </div>
+
+      <!-- Not Important but Urgent -->
+      <div class="matrix-quadrant" data-quadrant="NIBU">
+        <div class="matrix-quadrant-header">
+          <div>
+            <h3>Not Important but Urgent</h3>
+            <p>Delegate - Interruptions, some calls, some emails</p>
+          </div>
+          <div class="matrix-count" id="countNIBU">0</div>
+        </div>
+        <div class="matrix-list" id="listNIBU">
+          <div class="matrix-empty">No urgent but unimportant tasks</div>
+        </div>
+        <div class="matrix-add">
+          <input type="text" class="matrix-input" placeholder="Task title..." data-quadrant="NIBU" data-field="title">
+          <textarea class="matrix-textarea" placeholder="Add a note..." data-quadrant="NIBU" data-field="note"></textarea>
+          <button class="matrix-add-btn" onclick="addTaskToMatrix('NIBU')">Add Task</button>
+        </div>
+      </div>
+
+      <!-- Not Important & Not Urgent -->
+      <div class="matrix-quadrant" data-quadrant="NINU">
+        <div class="matrix-quadrant-header">
+          <div>
+            <h3>Not Important & Not Urgent</h3>
+            <p>Eliminate - Time wasters, excessive social media, trivial activities</p>
+          </div>
+          <div class="matrix-count" id="countNINU">0</div>
+        </div>
+        <div class="matrix-list" id="listNINU">
+          <div class="matrix-empty">No unimportant and non-urgent tasks</div>
+        </div>
+        <div class="matrix-add">
+          <input type="text" class="matrix-input" placeholder="Task title..." data-quadrant="NINU" data-field="title">
+          <textarea class="matrix-textarea" placeholder="Add a note..." data-quadrant="NINU" data-field="note"></textarea>
+          <button class="matrix-add-btn" onclick="addTaskToMatrix('NINU')">Add Task</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="matrix.js"></script>
+  <script src="instagram-modal.js"></script>
+
+  <!-- Instagram Profile Modal -->
+  <div id="instagramModal" class="instagram-modal" aria-hidden="true">
+    <div class="instagram-modal-overlay" onclick="closeInstagramModal()"></div>
+    <div class="instagram-modal-content">
+      <button class="instagram-modal-close" onclick="closeInstagramModal()">×</button>
+      <div class="instagram-profile">
+        <div class="instagram-profile-header">
+          <div class="instagram-avatar">RP</div>
+          <div class="instagram-info">
+            <h3>@rohanpatil.09_</h3>
+            <p>Follow me on Instagram</p>
+          </div>
+        </div>
+      </div>
+      <div class="instagram-modal-footer">
+        <a href="https://www.instagram.com/rohanpatil.09_" class="instagram-open-btn">Open in Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <span class="footer-name">@rohanpatil.09_</span>
+    </div>
+  </footer>
+</body>
+</html>

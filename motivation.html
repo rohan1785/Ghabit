@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motivation Hub - GHabit</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="motivation-styles.css">
+</head>
+<body class="motivation-body" style="margin: 0; padding: 0; overflow-x: hidden;">
+  <!-- Main Header Navigation -->
+  <div class="header" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000;">
+    <div class="header-left">
+      <button class="instagram-link" onclick="openInstagramModal()" aria-label="Follow on Instagram">
+        <svg class="instagram-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="header-right">
+      <nav class="primary-nav" id="primaryNav">
+        <a class="btn-ghost" href="todolist.html">Todo List</a>
+        <a class="btn-ghost" href="todo.html">Day Planner</a>
+        <a class="btn-ghost" href="habit.html">Habit Tracker</a>
+        <a class="btn-ghost" href="matrix.html">Matrix View</a>
+        <a class="btn-ghost" href="calendar.html">Calendar View</a>
+        <a class="btn-ghost active" href="motivation.html">Motivation</a>
+        <a class="btn-ghost" href="goal-countdown.html">Goal Countdown</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search motivation...">
+          <button class="btn-ghost">🔍</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="motivation-layout" style="min-height: 100vh; width: 100%; padding-top: 80px; overflow-y: auto; position: relative;">
+    <!-- Motivation Grid -->
+    <div class="motivation-grid" id="motivationGrid">
+      <div class="motivation-card" onclick="openMotivationModal('quote1')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Motivation</div>
+        </div>
+        <div class="motivation-caption">Daily Inspiration</div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote2')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Motivation</div>
+        </div>
+        <div class="motivation-caption">Stay Strong</div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote3')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Motivation</div>
+        </div>
+        <div class="motivation-caption">Never Give Up</div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote4')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Motivation</div>
+        </div>
+        <div class="motivation-caption">Dream Big</div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote5')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Motivation</div>
+        </div>
+        <div class="motivation-caption">Keep Going</div>
+      </div>
+      
+      <!-- Row 2 -->
+      <div class="motivation-card" onclick="openMotivationModal('quote6')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Focus</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote7')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Persistence</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote8')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Excellence</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote9')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Discipline</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote10')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Victory</div>
+        </div>
+      </div>
+      
+      <!-- Row 3 -->
+      <div class="motivation-card" onclick="openMotivationModal('quote11')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Courage</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote12')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Dreams</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote13')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Action</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote14')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Strength</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote15')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Purpose</div>
+        </div>
+      </div>
+      
+      <!-- Row 4 -->
+      <div class="motivation-card" onclick="openMotivationModal('quote16')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Passion</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote17')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Wisdom</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote18')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Hope</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote19')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Faith</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote20')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Power</div>
+        </div>
+      </div>
+      
+      <!-- Row 5 -->
+      <div class="motivation-card" onclick="openMotivationModal('quote21')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Energy</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote22')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Vision</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote23')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Change</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote24')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Freedom</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote25')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Peace</div>
+        </div>
+      </div>
+      
+      <!-- Row 6 -->
+      <div class="motivation-card" onclick="openMotivationModal('quote26')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Joy</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote27')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Love</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote28')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Truth</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote29')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Light</div>
+        </div>
+      </div>
+      <div class="motivation-card" onclick="openMotivationModal('quote30')">
+        <div class="motivation-thumb motivation-thumb-fallback">
+          <div class="motivation-badge">Life</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Motivation Modal -->
+  <div class="motivation-modal" id="motivationModal">
+    <div class="motivation-modal-layer">
+      <button class="motivation-close" onclick="closeMotivationModal()">×</button>
+      <div class="motivation-modal-inner">
+        <div class="motivation-modal-content">
+          <div class="motivation-modal-stage">
+            <div class="motivation-quote-display" id="motivationQuoteDisplay">
+              <h2 id="motivationQuoteText">Click on a card to see motivational content</h2>
+              <p id="motivationQuoteAuthor">- Author</p>
+            </div>
+          </div>
+        </div>
+        <div class="motivation-modal-caption" id="motivationCaption">
+          Daily Motivation
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="motivation.js"></script>
+  <script src="instagram-modal.js"></script>
+
+  <!-- Instagram Profile Modal -->
+  <div id="instagramModal" class="instagram-modal" aria-hidden="true">
+    <div class="instagram-modal-overlay" onclick="closeInstagramModal()"></div>
+    <div class="instagram-modal-content">
+      <button class="instagram-modal-close" onclick="closeInstagramModal()">×</button>
+      <div class="instagram-profile">
+        <div class="instagram-profile-header">
+          <div class="instagram-avatar">RP</div>
+          <div class="instagram-info">
+            <h3>@rohanpatil.09_</h3>
+            <p>Follow me on Instagram</p>
+          </div>
+        </div>
+      </div>
+      <div class="instagram-modal-footer">
+        <a href="https://www.instagram.com/rohanpatil.09_" class="instagram-open-btn">Open in Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <span class="footer-name">@rohanpatil.09_</span>
+    </div>
+  </footer>
+</body>
+</html>

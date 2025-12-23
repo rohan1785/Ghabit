@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day Planner - GHabit</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="day-planner-styles.css">
+</head>
+<body>
+  <!-- Main Header Navigation -->
+  <div class="header">
+    <div class="header-left">
+      <button class="instagram-link" onclick="openInstagramModal()" aria-label="Follow on Instagram">
+        <svg class="instagram-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="header-right">
+      <nav class="primary-nav" id="primaryNav">
+        <a class="btn-ghost" href="todolist.html">Todo List</a>
+        <a class="btn-ghost active" href="todo.html">Day Planner</a>
+        <a class="btn-ghost" href="habit.html">Habit Tracker</a>
+        <a class="btn-ghost" href="matrix.html">Matrix View</a>
+        <a class="btn-ghost" href="calendar.html">Calendar View</a>
+        <a class="btn-ghost" href="motivation.html">Motivation</a>
+        <a class="btn-ghost" href="goal-countdown.html">Goal Countdown</a>
+
+      </nav>
+      <div class="header-actions">
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search tasks...">
+          <button class="btn-ghost">🔍</button>
+        </div>
+        <button class="btn-ghost" onclick="clearAll()">🗑️ Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-planner-page">
+    <div class="day-planner-container">
+      <!-- Header Bar -->
+      <div class="day-planner-header">
+        <h2 class="day-planner-title">Day Planner</h2>
+        <div class="day-planner-date-nav">
+          <button class="day-planner-date-btn" id="prevDay">← Previous</button>
+          <button class="day-planner-date-btn" id="todayBtn">Today</button>
+          <button class="day-planner-date-btn" id="nextDay">Next →</button>
+          <div class="day-planner-date-display" id="currentDateDisplay"></div>
+        </div>
+        <div class="day-planner-summary">
+          <div class="day-planner-summary-item">
+            <span class="day-planner-summary-label">Tasks Today</span>
+            <span class="day-planner-summary-value" id="totalTasksCount">0</span>
+          </div>
+          <div class="day-planner-summary-item">
+            <span class="day-planner-summary-label">Estimated Time</span>
+            <span class="day-planner-summary-value" id="totalEstimatedTime">0h 0m</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Time Blocks -->
+      <div class="day-planner-blocks">
+        <!-- Morning Block -->
+        <div class="time-block-card" data-block="morning">
+          <div class="time-block-header">
+            <div class="time-block-title-section">
+              <h3 class="time-block-title">Morning</h3>
+              <div class="time-block-time">6:00 – 12:00</div>
+            </div>
+            <div class="time-block-progress-section">
+              <div class="time-block-progress-bar">
+                <div class="time-block-progress-fill" data-progress="0" style="width: 0%"></div>
+              </div>
+              <div class="time-block-stats" data-stats="0 / 0 tasks done · 0h 0m scheduled"></div>
+            </div>
+          </div>
+          <div class="time-block-tasks" id="morningTasks"></div>
+          <div class="time-block-add">
+            <button class="time-block-add-btn" onclick="toggleAddForm('morning')">+ Add Task to Morning</button>
+            <div class="time-block-add-form" id="morningForm">
+              <input type="text" class="time-block-form-input" placeholder="Task title (required)" data-block="morning" data-field="title">
+              <input type="text" class="time-block-form-input" placeholder="Note (optional)" data-block="morning" data-field="note">
+              <div class="time-block-form-time">
+                <input type="number" min="0" max="23" placeholder="H" data-block="morning" data-field="hours">
+                <span>:</span>
+                <input type="number" min="0" max="59" placeholder="M" data-block="morning" data-field="minutes">
+              </div>
+              <div class="time-block-form-actions">
+                <button class="time-block-form-btn time-block-form-btn-secondary" onclick="cancelAddForm('morning')">Cancel</button>
+                <button class="time-block-form-btn time-block-form-btn-primary" onclick="addTaskToBlock('morning')">Add Task</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Afternoon Block -->
+        <div class="time-block-card" data-block="afternoon">
+          <div class="time-block-header">
+            <div class="time-block-title-section">
+              <h3 class="time-block-title">Afternoon</h3>
+              <div class="time-block-time">12:00 – 16:00</div>
+            </div>
+            <div class="time-block-progress-section">
+              <div class="time-block-progress-bar">
+                <div class="time-block-progress-fill" data-progress="0" style="width: 0%"></div>
+              </div>
+              <div class="time-block-stats" data-stats="0 / 0 tasks done · 0h 0m scheduled"></div>
+            </div>
+          </div>
+          <div class="time-block-tasks" id="afternoonTasks"></div>
+          <div class="time-block-add">
+            <button class="time-block-add-btn" onclick="toggleAddForm('afternoon')">+ Add Task to Afternoon</button>
+            <div class="time-block-add-form" id="afternoonForm">
+              <input type="text" class="time-block-form-input" placeholder="Task title (required)" data-block="afternoon" data-field="title">
+              <input type="text" class="time-block-form-input" placeholder="Note (optional)" data-block="afternoon" data-field="note">
+              <div class="time-block-form-time">
+                <input type="number" min="0" max="23" placeholder="H" data-block="afternoon" data-field="hours">
+                <span>:</span>
+                <input type="number" min="0" max="59" placeholder="M" data-block="afternoon" data-field="minutes">
+              </div>
+              <div class="time-block-form-actions">
+                <button class="time-block-form-btn time-block-form-btn-secondary" onclick="cancelAddForm('afternoon')">Cancel</button>
+                <button class="time-block-form-btn time-block-form-btn-primary" onclick="addTaskToBlock('afternoon')">Add Task</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Evening Block -->
+        <div class="time-block-card" data-block="evening">
+          <div class="time-block-header">
+            <div class="time-block-title-section">
+              <h3 class="time-block-title">Evening</h3>
+              <div class="time-block-time">16:00 – 20:00</div>
+            </div>
+            <div class="time-block-progress-section">
+              <div class="time-block-progress-bar">
+                <div class="time-block-progress-fill" data-progress="0" style="width: 0%"></div>
+              </div>
+              <div class="time-block-stats" data-stats="0 / 0 tasks done · 0h 0m scheduled"></div>
+            </div>
+          </div>
+          <div class="time-block-tasks" id="eveningTasks"></div>
+          <div class="time-block-add">
+            <button class="time-block-add-btn" onclick="toggleAddForm('evening')">+ Add Task to Evening</button>
+            <div class="time-block-add-form" id="eveningForm">
+              <input type="text" class="time-block-form-input" placeholder="Task title (required)" data-block="evening" data-field="title">
+              <input type="text" class="time-block-form-input" placeholder="Note (optional)" data-block="evening" data-field="note">
+              <div class="time-block-form-time">
+                <input type="number" min="0" max="23" placeholder="H" data-block="evening" data-field="hours">
+                <span>:</span>
+                <input type="number" min="0" max="59" placeholder="M" data-block="evening" data-field="minutes">
+              </div>
+              <div class="time-block-form-actions">
+                <button class="time-block-form-btn time-block-form-btn-secondary" onclick="cancelAddForm('evening')">Cancel</button>
+                <button class="time-block-form-btn time-block-form-btn-primary" onclick="addTaskToBlock('evening')">Add Task</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Night Block -->
+        <div class="time-block-card" data-block="night">
+          <div class="time-block-header">
+            <div class="time-block-title-section">
+              <h3 class="time-block-title">Night</h3>
+              <div class="time-block-time">20:00 – 6:00</div>
+            </div>
+            <div class="time-block-progress-section">
+              <div class="time-block-progress-bar">
+                <div class="time-block-progress-fill" data-progress="0" style="width: 0%"></div>
+              </div>
+              <div class="time-block-stats" data-stats="0 / 0 tasks done · 0h 0m scheduled"></div>
+            </div>
+          </div>
+          <div class="time-block-tasks" id="nightTasks"></div>
+          <div class="time-block-add">
+            <button class="time-block-add-btn" onclick="toggleAddForm('night')">+ Add Task to Night</button>
+            <div class="time-block-add-form" id="nightForm">
+              <input type="text" class="time-block-form-input" placeholder="Task title (required)" data-block="night" data-field="title">
+              <input type="text" class="time-block-form-input" placeholder="Note (optional)" data-block="night" data-field="note">
+              <div class="time-block-form-time">
+                <input type="number" min="0" max="23" placeholder="H" data-block="night" data-field="hours">
+                <span>:</span>
+                <input type="number" min="0" max="59" placeholder="M" data-block="night" data-field="minutes">
+              </div>
+              <div class="time-block-form-actions">
+                <button class="time-block-form-btn time-block-form-btn-secondary" onclick="cancelAddForm('night')">Cancel</button>
+                <button class="time-block-form-btn time-block-form-btn-primary" onclick="addTaskToBlock('night')">Add Task</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="day-planner.js"></script>
+  <script src="instagram-modal.js"></script>
+
+  <!-- Instagram Profile Modal -->
+  <div id="instagramModal" class="instagram-modal" aria-hidden="true">
+    <div class="instagram-modal-overlay" onclick="closeInstagramModal()"></div>
+    <div class="instagram-modal-content">
+      <button class="instagram-modal-close" onclick="closeInstagramModal()">×</button>
+      <div class="instagram-profile">
+        <div class="instagram-profile-header">
+          <div class="instagram-avatar">RP</div>
+          <div class="instagram-info">
+            <h3>@rohanpatil.09_</h3>
+            <p>Follow me on Instagram</p>
+          </div>
+        </div>
+      </div>
+      <div class="instagram-modal-footer">
+        <a href="https://www.instagram.com/rohanpatil.09_" class="instagram-open-btn">Open in Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <span class="footer-name">@rohanpatil.09_</span>
+    </div>
+  </footer>
+</body>
+</html>

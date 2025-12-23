@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goal Countdown - GHabit</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="goal-countdown-styles.css">
+</head>
+<body>
+  <!-- Main Header Navigation -->
+  <div class="header">
+    <div class="header-left">
+      <button class="instagram-link" onclick="openInstagramModal()" aria-label="Follow on Instagram">
+        <svg class="instagram-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="header-right">
+      <nav class="primary-nav" id="primaryNav">
+        <a class="btn-ghost" href="todolist.html">Todo List</a>
+        <a class="btn-ghost" href="todo.html">Day Planner</a>
+        <a class="btn-ghost" href="habit.html">Habit Tracker</a>
+        <a class="btn-ghost" href="matrix.html">Matrix View</a>
+        <a class="btn-ghost" href="calendar.html">Calendar View</a>
+        <a class="btn-ghost" href="motivation.html">Motivation</a>
+        <a class="btn-ghost active" href="goal-countdown.html">Goal Countdown</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search goals...">
+          <button class="btn-ghost">🔍</button>
+        </div>
+        <button class="btn-ghost" onclick="clearAll()">🗑️ Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="goal-countdown-container">
+    <!-- Header -->
+    <div class="goal-countdown-header">
+      <h1 class="goal-countdown-title">Goal Countdown</h1>
+      <p class="goal-countdown-subtitle">Track your progress towards important deadlines and milestones</p>
+    </div>
+
+    <!-- Add Goal Section -->
+    <div class="add-goal-section">
+      <div class="add-goal-form">
+        <input type="text" id="goalTitle" placeholder="Goal title (required)" required>
+        <input type="text" id="goalDescription" placeholder="Description (optional)">
+        <input type="date" id="goalDeadline" required>
+        <select id="goalCategory">
+          <option value="">Select Category</option>
+          <option value="personal">🎯 Personal</option>
+          <option value="work">💼 Work</option>
+          <option value="health">🏥 Health</option>
+          <option value="learning">📚 Learning</option>
+          <option value="finance">💰 Finance</option>
+          <option value="travel">✈️ Travel</option>
+        </select>
+        <button id="addGoalBtn" class="btn-primary">Add Goal</button>
+      </div>
+    </div>
+
+    <!-- Goals Grid -->
+    <div class="goals-grid" id="goalsGrid">
+      <!-- Goals will be dynamically added here -->
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🎯</div>
+      <h3>No Goals Yet</h3>
+      <p>Add your first goal to start tracking your progress towards important deadlines.</p>
+    </div>
+  </div>
+
+  <!-- Goal Details Modal -->
+  <div class="goal-modal" id="goalModal">
+    <div class="goal-modal-overlay" onclick="closeGoalModal()"></div>
+    <div class="goal-modal-content">
+      <div class="goal-modal-header">
+        <h3 class="goal-modal-title" id="goalModalTitle">Goal Details</h3>
+        <button class="goal-modal-close" onclick="closeGoalModal()">×</button>
+      </div>
+      <div class="goal-modal-body">
+        <div class="goal-modal-info" id="goalModalInfo">
+          <!-- Goal details will be populated here -->
+        </div>
+        <div class="goal-modal-progress">
+          <div class="progress-ring" id="goalModalProgress">
+            <svg class="progress-ring-svg" width="120" height="120">
+              <circle class="progress-ring-circle-bg" cx="60" cy="60" r="54"></circle>
+              <circle class="progress-ring-circle" cx="60" cy="60" r="54"></circle>
+            </svg>
+            <div class="progress-text" id="goalModalProgressText">0%</div>
+          </div>
+        </div>
+      </div>
+      <div class="goal-modal-actions">
+        <button class="btn-ghost" onclick="closeGoalModal()">Close</button>
+        <button class="btn-primary" onclick="markGoalComplete()">Mark Complete</button>
+        <button class="btn-danger" onclick="deleteGoal()">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="goal-countdown.js"></script>
+  <script src="instagram-modal.js"></script>
+
+  <!-- Instagram Profile Modal -->
+  <div id="instagramModal" class="instagram-modal" aria-hidden="true">
+    <div class="instagram-modal-overlay" onclick="closeInstagramModal()"></div>
+    <div class="instagram-modal-content">
+      <button class="instagram-modal-close" onclick="closeInstagramModal()">×</button>
+      <div class="instagram-profile">
+        <div class="instagram-profile-header">
+          <div class="instagram-avatar">RP</div>
+          <div class="instagram-info">
+            <h3>@rohanpatil.09_</h3>
+            <p>Follow me on Instagram</p>
+          </div>
+        </div>
+      </div>
+      <div class="instagram-modal-footer">
+        <a href="https://www.instagram.com/rohanpatil.09_" class="instagram-open-btn">Open in Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <span class="footer-name">@rohanpatil.09_</span>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "ghabit",
+  "version": "1.0.0",
+  "description": "Complete productivity suite with task management, habit tracking, and more",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "productivity",
+    "task-management",
+    "habit-tracker",
+    "day-planner"
+  ],
+  "author": "Rohan Patil",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
