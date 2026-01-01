@@ -67,7 +67,7 @@ ghabit/
 └── README.md              # This file
 ```
 
-## 🎯 How to Use
+## How to Use
 
 ### Habit Tracker
 1. Navigate to the Habit Tracker page
@@ -99,7 +99,7 @@ npm run dev
 - **Backend**: Express.js server for static file serving
 - **Storage**: LocalStorage for data persistence
 
-## 🎨 Customization
+## Customization
 
 ### Themes
 The app supports dark and light themes. Toggle using the theme button in the header.
@@ -109,14 +109,14 @@ The app supports dark and light themes. Toggle using the theme button in the hea
 2. Add corresponding JavaScript and CSS files
 3. Update navigation in `todolist.html`
 
-## 📱 Browser Support
+## Browser Support
 
 - Chrome (recommended)
 - Firefox
 - Safari
 - Edge
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the project
 2. Create your feature branch
@@ -124,7 +124,7 @@ The app supports dark and light themes. Toggle using the theme button in the hea
 4. Push to the branch
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License.
 
@@ -133,12 +133,8 @@ This project is licensed under the MIT License.
 **Rohan Patil**
 - Instagram: [@rohanpatil.09_](https://www.instagram.com/rohanpatil.09_)
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Built with modern web technologies
 - Inspired by productivity methodologies
 - Designed for daily use and habit formation
-
----
-
-**Happy Habit Building! 🎯**
