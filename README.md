@@ -1,8 +1,8 @@
-# 🎯 GHabit - Complete Productivity Suite
+# 🎯 GHabit(Complete Productivity Suite)
 
 A modern, feature-rich productivity application with habit tracking, task management, day planning, and motivation tools.
 
-## ✨ Features
+## Features
 
 - **📝 Task Manager** - Organize your daily tasks
 - **📅 Calendar View** - Visual planning interface  
@@ -13,7 +13,7 @@ A modern, feature-rich productivity application with habit tracking, task manage
 - **🏆 Goal Countdown** - Track your progress
 - **📈 Analytics** - Performance insights
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js (version 14 or higher)
